@@ -1,0 +1,64 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.2.1"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+//组件化自定编译清单文件
+plugins {
+    id "calces.appconfig" version "3.3.0-alpha01"
+}
+//自动组件化关闭
+appConfig {
+    debugEnable true
+    apps {
+        app {
+            name ":app"
+            applicationId "com.zhang.store"
+            applicationName ".App"
+            mainActivity ".MainActivity"
+            modules ':common',':lib_core',':net'
+        }
+    }
+
+    modules {
+        friend {
+            name ":common"
+            applicationId "com.zhang.common"
+            applicationName ".App"
+            mainActivity ".MainActivity"
+            isRunAlone false
+        }
+        pay {
+            name ":lib_core"
+            applicationId "com.zhang.lib_core"
+            applicationName ".App"
+            mainActivity ".MainActivity"
+            isRunAlone false
+        }
+        im {
+            name ":net"
+            applicationId "com.zhang.net"
+            applicationName ".App"
+            mainActivity ".MainActivity"
+            isRunAlone false
+        }
+    }
+}
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        jcenter() // Warning: this repository is going to shut down soon
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
